@@ -1,0 +1,22 @@
+# Use a imagem base do OpenJDK
+FROM openjdk:17-jdk-slim
+
+# Cria um diretório para a aplicação
+WORKDIR /app
+
+# Copia o JAR para o diretório no contêiner
+COPY target/*.jar app.jar
+
+# Copia o wait-for-it.sh para o diretório /app
+COPY wait-for-it.sh /app/wait-for-it.sh
+
+# Dá permissão de execução ao wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
+
+# Expõe a porta em que a aplicação irá rodar
+EXPOSE 8080 9092 8082 81
+
+# Comando para executar a aplicação com o wait-for-it.sh
+CMD ["./wait-for-it.sh", "mongodb:27017", "--", "java", "-jar", "app.jar"]
+
+

@@ -12,6 +12,7 @@ services:
       - h2
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/testdb
+    command: ["./wait-for-services.sh", "mongodb:27017", "h2:8082"]
 
   mongodb:
     image: mongo:latest
@@ -26,7 +27,7 @@ services:
       retries: 5
 
   h2:
-    image: jesperdj/h2
+    image: jesperdj/h2:latest
     ports:
       - "9092:9092"
       - "8082:8082"
@@ -41,6 +42,7 @@ services:
 volumes:
   mongo-data:
   h2-data:
+
 
 
 
